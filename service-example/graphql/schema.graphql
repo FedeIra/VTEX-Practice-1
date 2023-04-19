@@ -10,3 +10,35 @@ type University {
 type Query {
   getUniversitiesResolver(country: String!): [University]
 }
+
+type Other {
+  temp: Float
+  feels_like: Float
+  temp_min: Float
+  temp_max: Float
+  pressure: Int
+  humidity: Int
+  sea_level: Int
+  grnd_level: Int
+}
+
+type MainWeather {
+  id: Int
+  main: String
+  description: String
+  icon: String
+}
+
+type Main {
+  visibility: Int
+  timezone: Int
+  id: Int
+  name: String
+  cod: Int
+  mainWeather: [MainWeather]
+  other: Other
+}
+
+type QueryWeather {
+  getWeatherResolver(city: String!): Main
+}

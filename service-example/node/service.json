@@ -13,6 +13,10 @@
     "universities": {
       "path": "/v0/universities/:country",
       "public": true
+    },
+    "weather": {
+      "path": "/v0/weather/:city",
+      "public": true
     }
   }
 }

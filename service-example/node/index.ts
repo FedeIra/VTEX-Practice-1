@@ -12,6 +12,10 @@ import { getUniversities } from './middlewares/getUniversities'
 // import { validate } from './middlewares/validate'
 import { getUniversitiesResolver } from './resolvers/universities'
 
+// new weather service:
+import { getWeather } from './middlewares/getWeather'
+import { getWeatherResolver } from './resolvers/weather'
+
 const TIMEOUT_MS = 800
 
 // Create a LRU memory cache for the Status client.
@@ -58,11 +62,16 @@ export default new Service({
     universities: method({
       GET: [getUniversities],
     }),
+    weather: method({
+      GET: [getWeather],
+    }),
   },
   graphql: {
     resolvers: {
       Query: {
         getUniversitiesResolver,
+        
+        getWeatherResolver,
       },
     },
   },
