@@ -14,7 +14,7 @@ import { getUniversitiesResolver } from './resolvers/universities'
 
 // new weather service:
 import { getWeather } from './middlewares/getWeather'
-import { getWeatherResolver } from './resolvers/weather'
+// import { getWeatherResolver } from './resolvers/weather'
 
 const TIMEOUT_MS = 800
 
@@ -70,8 +70,7 @@ export default new Service({
     resolvers: {
       Query: {
         getUniversitiesResolver,
-        
-        getWeatherResolver,
+        // getWeatherResolver,
       },
     },
   },
