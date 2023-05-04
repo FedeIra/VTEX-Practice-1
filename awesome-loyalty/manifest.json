@@ -1,5 +1,5 @@
 {
-  "name": "service-example",
+  "name": "awesome-loyalty-services",
   "vendor": "vtex",
   "version": "0.2.21",
   "title": "Service Example",
@@ -16,12 +16,14 @@
   },
   "credentialType": "absolute",
   "policies": [
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "httpstat.us",
-        "path": "*"
-      }
+     {
+      "name": "OMSViewer"
+    },
+     {
+      "name": "ADMIN_DS"
+    },
+     {
+      "name": "POWER_USER_DS"
     },
     {
       "name": "colossus-fire-event"
