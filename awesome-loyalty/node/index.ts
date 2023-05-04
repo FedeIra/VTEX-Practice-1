@@ -1,20 +1,9 @@
-/*
-*1) agrego a las rutas del client de vtex el path de la ruta de la API externa que quiero utilizar, en este caso, universities.
-*2) agrego el resolver de la ruta que cree para hacer la petición a la API externa. En este caso, le paso el resolver de getUniversities.
-*/
-
-import type { ClientsConfig, ServiceContext } from '@vtex/api'
+import type { ClientsConfig, ServiceContext, RecorderState } from '@vtex/api'
 import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
 import { status } from './middlewares/status'
-import { getUniversities } from './middlewares/getUniversities'
-// import { validate } from './middlewares/validate'
-import { getUniversitiesResolver } from './resolvers/universities'
-
-// new weather service:
-import { getWeather } from './middlewares/getWeather'
-// import { getWeatherResolver } from './resolvers/weather'
+import { validate } from './middlewares/validate'
 
 const TIMEOUT_MS = 800
 
@@ -43,12 +32,12 @@ const clients: ClientsConfig<Clients> = {
 
 declare global {
   // We declare a global Context type just to avoid re-writing ServiceContext<Clients, State> in every handler and resolver
-  type Context = ServiceContext<Clients>
+  type Context = ServiceContext<Clients, State>
 
   // The shape of our State object found in `ctx.state`. This is used as state bag to communicate between middlewares.
-  // interface State extends RecorderState {
-  //   code: number
-  // }
+  interface State extends RecorderState {
+    code: number
+  }
 }
 
 // Export a service that defines route handlers and client options.
@@ -57,21 +46,7 @@ export default new Service({
   routes: {
     // `status` is the route ID from service.json. It maps to an array of middlewares (or a single handler).
     status: method({
-      GET: [/* validate,  */status],
+      GET: [validate, status],
     }),
-    universities: method({
-      GET: [getUniversities],
-    }),
-    weather: method({
-      GET: [getWeather],
-    }),
-  },
-  graphql: {
-    resolvers: {
-      Query: {
-        getUniversitiesResolver,
-        // getWeatherResolver,
-      },
-    },
   },
 })

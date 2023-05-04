@@ -7,6 +7,7 @@ import { IOClients } from '@vtex/api'
 
 import Status from './status'
 import UniversitiesClient from './universities'
+import WeatherClient from './weather'
 
 // Extend the default IOClients implementation with our own custom clients.
 export class Clients extends IOClients {
@@ -15,5 +16,8 @@ export class Clients extends IOClients {
   }
     public get universities() {
     return this.getOrSet('universities', UniversitiesClient)
+    }
+  public get weather() {
+    return this.getOrSet('weather', WeatherClient)
   }
 }

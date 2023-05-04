@@ -32,6 +32,13 @@
       }
     },
     {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "api.openweathermap.org",
+        "path": "/data/2.5/*"
+      }
+    },
+    {
       "name": "colossus-fire-event"
     },
     {
