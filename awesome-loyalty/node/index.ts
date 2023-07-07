@@ -2,10 +2,13 @@ import type { ClientsConfig, ServiceContext, RecorderState } from '@vtex/api'
 import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
-import { status } from './middlewares/status'
-import { validate } from './middlewares/validate'
 
-const TIMEOUT_MS = 800
+import { search } from './middlewares/search'
+import { getBalanceLoyalty } from './middlewares/card'
+import { transactions } from './middlewares/transactions'
+
+
+const TIMEOUT_MS = 500
 
 // Create a LRU memory cache for the Status client.
 // The @vtex/api HttpClient respects Cache-Control headers and uses the provided cache.
@@ -38,15 +41,21 @@ declare global {
   interface State extends RecorderState {
     code: number
   }
-}
+} // parte donde nos comunicamos entre diferentes middlewares. Si queremos q una etapa del middleware este ocmunicando variables o constantes lo podemos hacer a través de esta interfaz
 
 // Export a service that defines route handlers and client options.
 export default new Service({
   clients,
   routes: {
-    // `status` is the route ID from service.json. It maps to an array of middlewares (or a single handler).
-    status: method({
-      GET: [validate, status],
+    // `search` is the route ID from service.json. It maps to an array of middlewares (or a single handler).
+    search: method({
+      POST: [search],
+    }),
+    card: method({
+      GET: [getBalanceLoyalty],
+    }),
+    transactions: method({
+      POST: [transactions],
     }),
   },
 })
